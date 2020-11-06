@@ -1,4 +1,4 @@
-# coba4
+# Cashier App
 
 ## Project setup
 ```
