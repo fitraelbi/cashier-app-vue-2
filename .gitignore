@@ -2,6 +2,10 @@
 node_modules
 /dist
 
+nginx.conf
+yarn.lock
+package-lock.json
+
 
 # local env files
 .env.local
@@ -22,3 +26,4 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .env
+

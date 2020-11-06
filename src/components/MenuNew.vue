@@ -94,6 +94,7 @@
                 cart_checkout : [],
                 invoces_recipes : 0,
                 ppn_tax : 1,
+                refresh_token: '',
                 total_all : 1,
                 name_cashier: "Pevita Pearce",
                 params : {
@@ -224,14 +225,36 @@
         watch : {
             
         },
-        mounted() {
-        axios.get(process.env.VUE_APP_URL)
-            .then((res) => {
-                this.data = res.data.result
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        mounted() { 
+            if (localStorage.getItem("token") === null){
+                this.$router.push('/')
+            } else {
+                const token = localStorage.getItem('token')
+                const refreshToken = localStorage.getItem('refreshToken')
+                const config = { headers: { Authorization: `Bearer ${token}` } }
+                axios.get(process.env.VUE_APP_URL, config)
+                    .then((res) => {
+                        this.data = res.data.result
+                        console.log(this.data)
+                    })
+                    .catch((err) => {
+                        //console.log(err.response.status)
+                        if(err.response.status === 401){
+                            const params = { refreshToken: `${refreshToken}` }
+                            axios.post(process.env.VUE_APP_REFRESHTOKEN, params)
+                                .then((res) => {
+                                    localStorage.setItem('token', res.data.accessToken)
+                                    console.log('ganti token')
+                                    this.$router.go(this.$router.currentRoute)
+                                })
+                                .catch((error) => {
+                                    if(error.response.status === 401){
+                                         this.$router.push('/')
+                                    }
+                                })
+                        }
+                    })
+            }
         }
     }
 </script>
@@ -266,7 +289,7 @@
         height: 70px;
         margin-left: -20px;
         position: fixed;
-        width: 139.7vh;
+        width: 1323px;
         margin-top: -5px;
         background: white;
         z-index: 5;

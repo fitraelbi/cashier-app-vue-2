@@ -5,7 +5,6 @@
         <li><router-link to="/menu"><img class="icon-sidebar" :src="require('./img/food.svg')" alt=""></router-link></li>
         <li><router-link to="/history"><img class="icon-sidebar" :src="require('./img/graph.svg')" alt=""></router-link></li>
         <li @click="showModal"><img class="icon-sidebar" :src="require('./img/more (1).svg')" alt=""></li>
-        <li><router-link to="/login"><img class="icon-sidebar" :src="require('./assets/profile-user.svg')" alt=""></router-link></li>
         <li @click="logout"><img class="icon-sidebar" :src="require('./assets/logout.svg')" alt=""></li>
       </ul>
     </div>
@@ -100,6 +99,7 @@ export default {
         this.$router.go(this.$router.currentRoute)
     },
     logout(){
+      localStorage.clear()
       this.$router.push('/')
     }
   },

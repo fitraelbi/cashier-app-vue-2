@@ -10,7 +10,7 @@
             </div>
         </b-card>
         <div class="body-card">
-            <b-card-title v-model="category"  class="title">{{ item.name }} <span class="float-right" :style="[item.category == 'drink' ? { backgroundColor: '#5bc0de' } : item.category == 'cake' ? { backgroundColor: '#f0ad4e' } : item.category == 'food' ? { backgroundColor: '#5cb85c' } : null]">{{ category }}</span></b-card-title>
+            <b-card-title v-model="category"  class="title">{{ item.name }} <span class="float-right" :style="[item['category.nama'] == 'drink' ? { backgroundColor: '#5bc0de' } : item['category.nama'] == 'cake' ? { backgroundColor: '#f0ad4e' } : item['category.nama'] == 'food' ? { backgroundColor: '#5cb85c' } : null]">{{ item['category.nama'] }}</span></b-card-title>
             <b-card-text class="price">Rp. {{ item.price }}  <span class="float-right"><span @click="showModal"><i class="fas fa-edit"></i></span><span @click="deleteMenu"><i class="fas fa-trash"></i></span></span></b-card-text>
         </div>
         </div>
@@ -52,7 +52,7 @@
                 edit_name: this.item.name,
                 edit_price: this.item.price,
                 edit_image: this.item.image,
-                category : this.item.category,
+                category : this.item.['category.nama'],
                 options: [
                     { value: 'drink', text: 'drink' },
                     { value: 'cake', text: 'cake' },
@@ -116,12 +116,16 @@
                     })
             },
             async deleteMenu(){
-                await axios.delete(process.env.VUE_APP_URL, { data: { name: this.edit_name } })
-                .then((res) => {
-                        console.log(res.data)
-                        this.load()
-                    })
-                .catch((err) => { console.log(err)})
+                //await axios.delete(process.env.VUE_APP_URL, { data: { name: this.edit_name } })
+                const url = process.env.VUE_APP_URL
+                const url2 = `?name=${ this.edit_name }`
+                console.log(url.concat(url2))
+                await axios.delete(url.concat(url2))
+                 .then((res) => {
+                         console.log(res.data)
+                         this.load()
+                     })
+                 .catch((err) => { console.log(err)})
             },
             storeToCart(){
                 this.isHidden = true

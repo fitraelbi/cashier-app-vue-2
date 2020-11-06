@@ -91,15 +91,36 @@
             
         },
         created(){
-            axios.get(process.env.VUE_APP_HISTORY)
-            .then((res) => {
-                console.log(res.data.result)
-                this.data_history = res.data.result
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }
+             if (localStorage.getItem("token") === null){
+                this.$router.push('/')
+            } else {
+                const token = localStorage.getItem('token')
+                const refreshToken = localStorage.getItem('refreshToken')
+                const config = { headers: { Authorization: `Bearer ${token}` } }
+                axios.get(process.env.VUE_APP_HISTORY, config)
+                    .then((res) => {
+                        this.data_history = res.data.result
+                        console.log(this.data_history)
+                    })
+                    .catch((err) => {
+                        //console.log(err.response.status)
+                        if(err.response.status === 401){
+                            const params = { refreshToken: `${refreshToken}` }
+                            axios.post(process.env.VUE_APP_REFRESHTOKEN, params)
+                                .then((res) => {
+                                    localStorage.setItem('token', res.data.accessToken)
+                                    console.log('ganti token')
+                                    this.$router.go(this.$router.currentRoute)
+                                })
+                                .catch((error) => {
+                                    if(error.response.status === 401){
+                                         this.$router.push('/')
+                                    }
+                                })
+                        }
+                    })
+            }
+       }
     }
 </script>
 

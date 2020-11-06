@@ -98,11 +98,12 @@
                    email  : this.login_email,
                    password : this.login_password
                }
-               console.log(params)
                this.reset_login()
                await axios.post(process.env.VUE_APP_AUTH, params)
                 .then((res) => {
                         console.log(res.data)
+                        localStorage.setItem('token', res.data.accessToken)
+                        localStorage.setItem('refreshToken', res.data.refreshToken)
                         this.$router.push('/menu')
                     })
                 .catch((err) => {
