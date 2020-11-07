@@ -20,7 +20,7 @@ pipeline{
         stage('Build Docker Image Develop'){
             when {
                 expression {
-                    BRANCH_NAME == 'develop'
+                    BRANCH_NAME == 'develop2'
                 }
             }
             steps{
