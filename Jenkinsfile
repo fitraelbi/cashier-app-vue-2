@@ -21,7 +21,7 @@ pipeline{
                script {             
                  def dockerfile = 'dockerfile'
                 docker.withRegistry('', registryCredential) {
-                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2#develop")
+                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2.git#develop2")
                     app.push("latest")
                     def backend = docker.build(registry_backend, "-f ${dockerfile} https://github.com/fitraelbi/cashier-restaurant-app-nodejs3.git#main")
                     backend.push("latest")
