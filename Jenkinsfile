@@ -5,6 +5,7 @@ pipeline{
     }
     environment {
         registry = "fitrakz/frontend"
+        registry_develop = "fitrakz/frontend"
         registry_backend = "fitrakz/backend"
         registryCredential = 'dockerHub'
     }
@@ -16,14 +17,19 @@ pipeline{
                 }
             }
         }
-        stage('Build Docker Image'){
+        stage('Build Docker Image Develop'){
+            when {
+                expression {
+                    BRANCH_NAME == 'develop'
+                }
+            }
             steps{
                script {             
                  def dockerfile = 'dockerfile'
                 docker.withRegistry('', registryCredential) {
-                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2#develop")
+                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2#develop2")
                     app.push("latest")
-                    def backend = docker.build(registry_backend, "-f ${dockerfile} https://github.com/fitraelbi/cashier-restaurant-app-nodejs3.git#main")
+                    def backend = docker.build(registry_backend, "-f ${dockerfile} https://github.com/fitraelbi/cashier-restaurant-app-nodejs3.git#dev")
                     backend.push("latest")
                   }
                }
@@ -32,7 +38,7 @@ pipeline{
         stage('Remove Image'){
             steps{
                 echo 'Remove....'
-                sh "docker rmi ${registry}:latest"
+                sh "docker rmi ${registry_develop}:latest"
                 sh "docker rmi ${registry_backend}:latest"
             }
         }

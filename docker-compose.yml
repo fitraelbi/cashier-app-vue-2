@@ -24,7 +24,7 @@ services:
 
   my-app:
     container_name: my-app
-    image: "fitrakz/frontend"
+    image: "fitrakz/develop"
     ports:
       - '8081:8080'
     networks:
