@@ -14,6 +14,17 @@ services:
         reservations:
           cpus: '0.0001'
           memory: 20M
+    environment:
+      ACCESS_TOKEN_SECRET: 0d1afdb986e6ea2dba64dec53697bd0757380f47442e2f85d0139e58eb035567
+      REFRESH_TOKEN_SECRET: 7afb273497b3750a8a1e27c54101092b7dca88cc112b20326e59258b99abbdc0
+      DB_PASSWORD: 12341234
+      DB_USER: mydb
+      DB_HOST: db
+      DB_PORT: 5433
+      DB_NAME: cashier-restaurant
+      PORT_REDIS: 6379
+      HOST_REDIS: redis
+      PORT: 3000
 
   nodejs2:
     image: "fitrakz/backend"
@@ -21,6 +32,17 @@ services:
       - "3001:3000"
     networks:
       - samplenet
+    environment:
+      ACCESS_TOKEN_SECRET: 0d1afdb986e6ea2dba64dec53697bd0757380f47442e2f85d0139e58eb035567
+      REFRESH_TOKEN_SECRET: 7afb273497b3750a8a1e27c54101092b7dca88cc112b20326e59258b99abbdc0
+      DB_PASSWORD: 12341234
+      DB_USER: mydb
+      DB_HOST: 18.234.103.79
+      DB_PORT: 5433
+      DB_NAME: cashier-restaurant
+      PORT_REDIS: 6379
+      HOST_REDIS: 18.234.103.79
+      PORT: 3000
 
   my-app:
     container_name: my-app
