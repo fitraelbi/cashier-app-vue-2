@@ -4,7 +4,7 @@ pipeline{
         booleanParam(name: 'RUNTEST', defaultValue: true, description: 'Toggle this value for testing')
     }
     environment {
-        registry = "fitrakz/staging-cashier-app"
+        registry = "fitrakz/production-cashier-app"
         registry_backend = "fitrakz/backend"
         registryCredential = 'dockerHub'
     }
@@ -16,17 +16,17 @@ pipeline{
                 }
             }
         }
-        stage('Build Docker Image Staging'){
+        stage('Build Docker Image Productio'){
             when {
                 expression {
-                    BRANCH_NAME == 'staging'
+                    BRANCH_NAME == 'production'
                 }
             }
             steps{
                script {             
                  def dockerfile = 'dockerfile'
                 docker.withRegistry('', registryCredential) {
-                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2.git#staging")
+                    def app = docker.build(registry, "-f ${dockerfile} https://github.com/fitraelbi/cashier-app-vue-2.git#production")
                     app.push("latest")
                     def backend = docker.build(registry_backend, "-f ${dockerfile} https://github.com/fitraelbi/cashier-restaurant-app-nodejs3.git#main")
                     backend.push("latest")
