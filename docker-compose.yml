@@ -47,8 +47,15 @@ services:
   my-app:
     container_name: my-app
     image: "fitrakz/develop"
+    restart: always
+    volumes:
+      - ./public_html:/public_html
+      - ./conf.d:/etc/nginx/conf.d/
     ports:
-      - '8081:8080'
+      - 80:80
+    links:
+      - nodejs:nodejs
+      - nodejs2:nodejs2
     networks:
       - samplenet
 
