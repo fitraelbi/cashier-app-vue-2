@@ -51,13 +51,25 @@ services:
     volumes:
       - ./public_html:/public_html
       - ./conf.d:/etc/nginx/conf.d/
+      - ./dhparam:/etc/nginx/dhparam
+      - ./certbot/conf/:/etc/nginx/ssl/
+      - ./certbot/data:/usr/share/nginx/html/letsencrypt
     ports:
       - 80:80
+      - 443:443
     links:
       - nodejs:nodejs
       - nodejs2:nodejs2
     networks:
       - samplenet
+
+  certbot:
+     image: certbot/certbot:latest
+     command: certonly --webroot --webroot-path=/usr/share/nginx/html/letsencrypt --email in4644591@gmail.com --agree-tos --no-eff-email -d centz.dimasrio.com
+     volumes:
+       - ./certbot/conf/:/etc/letsencrypt
+       - ./certbot/logs/:/var/log/letsencrypt
+       - ./certbot/data:/usr/share/nginx/html/letsencrypt
 
 networks:
     samplenet:
