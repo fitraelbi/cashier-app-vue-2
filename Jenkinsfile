@@ -54,7 +54,7 @@ pipeline{
          stage('Deploy Development'){
             when {
                 expression {
-                    BRANCH_NAME == 'production'
+                    BRANCH_NAME == 'staging'
                 }
             }
             steps{
