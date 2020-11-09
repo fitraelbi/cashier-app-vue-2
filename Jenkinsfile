@@ -38,8 +38,7 @@ pipeline{
         stage('Remove Image'){
             steps{
                 echo 'Remove....'
-                sh "docker rmi ${registry_develop}:latest"
-                sh "docker rmi ${registry_backend}:latest"
+                sh "docker rmi -f $(docker images -a -q)"
             }
         }
         stage('Run Testing'){
@@ -50,6 +49,31 @@ pipeline{
             }
             steps{
                 echo 'Testing....'
+            }
+        }
+        stage('Deploy Development'){
+            when {
+                expression {
+                    BRANCH_NAME == 'develop2'
+                }
+            }
+            steps{
+                script {
+                   sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'Development',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'cd ansible && ansible-playbook -i hosts setup-dev.yml',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
             }
         }
     }
