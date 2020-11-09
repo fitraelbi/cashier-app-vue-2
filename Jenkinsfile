@@ -38,7 +38,8 @@ pipeline{
         stage('Remove Image'){
             steps{
                 echo 'Remove....'
-                sh "docker rmi -f $(docker images -a -q)"
+                sh "docker rmi ${registry}:latest"
+                sh "docker rmi ${registry_backend}:latest"
             }
         }
         stage('Run Testing'){
