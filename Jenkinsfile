@@ -51,5 +51,29 @@ pipeline{
                 echo 'Testing....'
             }
         }
+        stage('Deploy Development'){
+            when {
+                expression {
+                    BRANCH_NAME == 'production'
+                }
+            }
+            steps{
+                script {
+                   sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'Development',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts setup-dev.yml',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
     }
 }
