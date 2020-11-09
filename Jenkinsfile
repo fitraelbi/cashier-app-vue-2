@@ -66,7 +66,7 @@ pipeline{
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible; ansible-playbook -i hosts setup-dev.yml',
+                                        execCommand: 'cd ansible && ansible-playbook -i hosts setup-production.yml',
                                         execTimeout: 120000,
                                     )
                                 ]
