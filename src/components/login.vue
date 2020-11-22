@@ -21,7 +21,7 @@
        <div id="login-button" v-if="!login_status" style="background:  #57CAD5; padding-top: 80px; transition: .5s ease-in-out;">
            <div id="inputContainer">
                <form>
-                    <h3 style="margin-bottom: 30px; color: white; font-weight: 600;">Cashier App!</h3>
+                    <h3 style="margin-bottom: 30px; color: white; font-weight: 600;">Cashier Applol!</h3>
                     <p style="color: white; font-size: 18px; font-weight: 600; margin-top: -20px;">You have an account?</p>
                      <b-button class="button-login" @click="switch_login" style="border: 2px solid white; background:  #57CAD5;  margin-top: 0px;" >SIGN IN</b-button>
                </form>
@@ -31,7 +31,7 @@
          <div id="register-button" v-if="login_status" style="background: #F24F8A; padding-top: 80px; transition: .5s ease-in-out;">
            <div id="inputContainer">
                <form>
-                    <h3 style="margin-bottom: 30px; color: white; font-weight: 600;">Cashier App!</h3>
+                    <h3 style="margin-bottom: 30px; color: white; font-weight: 600;">Cashier App2!</h3>
                     <p style="color: white; font-size: 18px; font-weight: 600; margin-top: -20px;">Don't you have an account?</p>
                      <b-button class="button-register" @click="switch_register" style="border: 2px solid white;  margin-top: 0px; background:#F24F8A;">SIGN UP</b-button>
                </form>
